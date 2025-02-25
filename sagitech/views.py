@@ -9,3 +9,6 @@ def LoginPage(request):
 def SignupPage(request):
     return render(request, 'sagitech/signup.html')
 
+def DashboardPage(request):
+    return render(request, 'sagitech/dashboard.html')  
+
