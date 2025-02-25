@@ -28,7 +28,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->f
+    <!-- Template Stylesheet -->
     <link href="static/css/style.css" rel="stylesheet">
 </head>
 
@@ -69,22 +69,27 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h1 class="m-0">SagiTech</h1>
-        </a>
+        <div class="d-flex align-items-center px-4 px-lg-5">
+            <img src="static/img/sagitech_logo.png" alt="SagiTech Logo" style="height: 25px; margin-right: 8px; display: inline-block; vertical-align: middle;">
+            <a href="{% url 'index' %}" class="navbar-brand text-white" style="display: inline-block; vertical-align: middle;">
+                <h4 class="mb-0" style="line-height: 1;">SagiTech</h4>
+            </a>
+        </div>
+        
+        
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Services</a>
+                <a href="{%url 'index' %}" class="nav-item nav-link active">Home</a>
+                <a href="#about" class="nav-item nav-link">About</a>
+                <a href="#services" class="nav-item nav-link">Services</a>
                 <div class="nav-item dropdown">
 
                 </div>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get Started <i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'login' %}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get Started <i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -101,7 +106,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">SagiTech: The Future of Smart Agriculture</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Get Started</a>
+                                    <a href="{% url 'login' %}" class="btn btn-primary py-sm-3 px-sm-4">Get Started</a>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +119,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-7">
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">Harvest the Future with SagiTech</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Get Started</a>
+                                    <a href="{% url 'login' %}" class="btn btn-primary py-sm-3 px-sm-4">Get Started</a>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +154,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Smart Crop Monitoring</h4>
-                                <span>Utilizing advanced AI and drone technology, SagiTech provides real-time insights into banana ripeness, health, and overall yield estimation.</span>
+                                <span>Utilizing advanced AI and drone technology, SagiTech provides real-time insights in banana ripeness and overall yield estimation.</span>
                             </div>
                         </div>
                     </div>
@@ -162,7 +167,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Data-Driven Insights</h4>
-                                <span>Farmers receive detailed analytics on crop conditions, helping optimize harvesting schedules and improve productivity.</span>
+                                <span>Farmers receive detailed analytics on environmental conditions, helping optimize harvesting schedules and improve productivity.</span>
                             </div>
                         </div>
                     </div>
@@ -175,7 +180,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4> Seamless User Experience</h4>
-                                <span>The platform offers an intuitive interface for farmers and buyers, allowing easy access to insights, reports, and market trends.</span>
+                                <span>The platform offers an intuitive interface for farmers and buyers, allowing easy access to insights and analytics.</span>
                             </div>
                         </div>
                     </div>
@@ -187,17 +192,17 @@
 
 
     <!-- About Start -->
-    <div class="container-xxl py-5">
+    <div id="about" class="container-xxl py-5">
         <div class="container">
             <div class="row g-5 align-items-end">
                 <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                     <img class="img-fluid rounded" data-wow-delay="0.1s" src="https://images.pexels.com/photos/9593100/pexels-photo-9593100.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                    <h1 class="display-1 text-primary mb-0">25</h1>
-                    <p class="text-primary mb-4">Year of Experience</p>
+<!--                     <h1 class="display-1 text-primary mb-0">25</h1>
+                    <p class="text-primary mb-4">Year of Experience</p> -->
                     <h1 class="display-5 mb-4">How Sagitech Works</h1>
-                    <p class="mb-4">SagiTech utilizes drones equipped with high-resolution cameras to capture images of banana plantations, which are then processed using AI-based image analysis to assess ripeness and predict yield. Machine learning models refine forecasts based on historical data, while IoT sensors monitor environmental conditions to optimize farming decisions. Farmers access real-time insights via a cloud-based dashboard, enabling them to make data-driven choices for improved productivity and sustainability.</p>
+                    <p class="mb-4">SagiTech utilizes drones equipped with high-resolution cameras to capture images of banana plantations, which are then processed using AI-based image analysis to assess banana ripeness and yield for accurate prediction. Machine learning models refine forecasts based on historical data, while IoT sensors monitor environmental conditions to optimize farming decisions. Farmers access real-time insights via a cloud-based dashboard, enabling them to make data-driven choices for improved productivity and sustainability.</p>
                 </div>
             </div>
         </div>
@@ -205,8 +210,9 @@
     <!-- About End -->
 
 
+
     <!-- Facts Start -->
-    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="static/img/carousel-1.jpg">
+    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="static/img/saging.jpg">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
@@ -236,14 +242,13 @@
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="fs-5 fw-bold text-primary">Why Choosing Us!</p>
-                    <h1 class="display-5 mb-4">Few Reasons Why People Choosing Us!</h1>
-                    <p class="mb-4">SagiTech scans banana farms, detecting ripeness levels with precision. Farmers receive real-time data on crop conditions, ensuring they harvest at the optimal moment for the best quality and market value. Our advanced system also provides accurate yield predictions, helping farmers plan ahead, reduce waste, and increase profitability.
+                    <p class="fs-5 fw-bold text-primary">Why Choose Us!</p>
+                    <h1 class="display-5 mb-4">Few Reasons Why People Choose Us!</h1>
+                    <p class="mb-4">SagiTech scans banana farms, detecting ripeness level with precision. Farmers receive real-time data on environmental conditions, ensuring they harvest at the optimal moment for the best quality and market value. Our advanced system also provides accurate yield predictions, helping farmers plan ahead, reduce waste, and increase profitability.
 
 Designed for all farmers—whether small-scale growers or large plantation owners—SagiTech is easy to use, requiring no technical expertise. It’s farming made smarter, more efficient, and future-ready.
 
 Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yield with SagiTech! </p>
-                    <a class="btn btn-primary py-3 px-4" href="">Explore More</a>
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 align-items-center">
@@ -284,106 +289,59 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
+    <div id="services" class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Our Services</p>
-                <h1 class="display-5 mb-5">Services That We Offer For You</h1>
+                <h1 class="display-5 mb-5">Innovative Solutions by SagiTech</h1>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-1.jpg" alt="">
+                            <img class="img-fluid" src="static/img/drone.jpg" alt="">
                         </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="static/img/icon/icon-3.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Planting & Field Preparation</h4>
-                            <p class="mb-4">We help farmers set up their banana fields with proper spacing, soil preparation, and planting techniques for healthy growth.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-2.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="static/img/icon/icon-6.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Ripeness Checking & Harvesting</h4>
-                            <p class="mb-4">Know exactly when to harvest for the best quality bananas, reducing waste and improving profits.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-3.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="static/img/icon/icon-5.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Yield Estimation & Planning</h4>
-                            <p class="mb-4">We assist in predicting banana production so farmers can plan sales and storage efficiently.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-4.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="static/img/icon/icon-4.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Farm Maintenance & Care </h4>
-                            <p class="mb-4">From weeding to proper watering, we support farmers in keeping their banana plants strong and productive.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-5.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
+                        <div id="smart" class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
                                 <img class="img-fluid" src="static/img/icon/icon-8.png" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Green Technology</h4>
-                            <p class="mb-4">Easily integrate SagiTech’s smart solutions into your banana farm with no technical expertise needed.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                            <h4 class="mb-3">Smart Crop Monitoring</h4>
+                            <p class="mb-4">Utilizing advanced AI and drone technology, SagiTech provides real-time insights into banana ripeness and overall yield estimation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item rounded d-flex h-100">
+                        <div class="service-img rounded">
+                            <img class="img-fluid" src="static/img/analytics.jpg" alt="">
+                        </div>
+                        <div id="data" class="service-text rounded p-5">
+                            <div class="btn-square rounded-circle mx-auto mb-3">
+                                <img class="img-fluid" src="static/img/icon/icon-7.png" alt="Icon">
+                            </div>
+                            <h4 class="mb-3">Data-Driven Insights</h4>
+                            <p class="mb-4">Farmers receive detailed analytics on environmental conditions, helping optimize harvesting schedules and improve productivity.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="static/img/service-6.jpg" alt="">
+                            <img class="img-fluid" src="static/img/ui.jpg" alt="">
                         </div>
-                        <div class="service-text rounded p-5">
+                        <div id="ui" class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="static/img/icon/icon-2.png" alt="Icon">
+                                <img class="img-fluid" src="static/img/icon/icon-1.png" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Support & Training</h4>
-                            <p class="mb-4">We provide hands-on guidance to help farmers adopt better techniques and make farming easier.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                            <h4 class="mb-3">Seamless User Experience</h4>
+                            <p class="mb-4">The platform offers an intuitive interface for farmers and buyers, allowing easy access to insights and analytics.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Service End -->
     <!-- Team Start -->
     <div class="container-xxl py-5">
@@ -395,42 +353,39 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="static/img/team-1.jpg" alt="">
+                        <img class="img-fluid" src="static/img/hero.jfif" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Hero Dela Cruz</h4>
                             <p class="text-primary">Information Technology</p>
                             <div class="team-social d-flex">
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.facebook.com/share/12KkJQnxZpR/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.instagram.com/wuzzybunny_?igsh=MWF6eGE3b3dpeDlubA%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="static/img/team-2.jpg" alt="">
+                        <img class="img-fluid" src="static/img/bianca.jpg" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Bianca Dechosa</h4>
                             <p class="text-primary">Information Technology</p>
                             <div class="team-social d-flex">
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.facebook.com/acnuu.22"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.instagram.com/jeluvs_b1anca?igsh=cnM3cjJsb3psM3lv"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="static/img/team-3.jpg" alt="">
+                        <img class="img-fluid" src="static/img/arjay.jfif" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Arjay Delos Reyes</h4>
                             <p class="text-primary">Information Technology</p>
                             <div class="team-social d-flex">
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.facebook.com/arjay.delosreyes.186"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href="https://www.instagram.com/_payutchot?igsh=MWV6Z29iNnVvZWhnbg=="><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -442,7 +397,7 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
 
 
     <!-- Testimonial Start -->
-    <div class="container-xxl py-5">
+    <!-- <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -468,38 +423,38 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Testimonial End -->
 
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-4">Contacts</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Mindoro State University</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+09059324823</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>Sagitech2025@gmail.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+<div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <h4 class="text-white mb-4">SagiTech</h4>
+                <img src="static/img/sagitech_logo.png" alt="SagiTech Logo" class="img-fluid mb-3">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h4 class="text-white mb-4">Contacts</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Masipit, Calapan City, Oriental Mindoro, 5205</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+63 9059324823</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>Sagitech2025@gmail.com</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-4">Services</h4>
-                    <a class="btn btn-link" href="">Planting & Field Preparation</a>
-                    <a class="btn btn-link" href="">Ripeness Checking & Harvesting</a>
-                    <a class="btn btn-link" href="">Yield Estimation & Planning</a>
-                    <a class="btn btn-link" href="">GFarm Maintenance & Care</a>
-                    <a class="btn btn-link" href="">Green Technology</a>
-                    <a class="btn btn-link" href="">Support & Training</a>
-                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h4 class="text-white mb-4">Services</h4>
+                <a class="btn btn-link" href="#smart">Smart Crop Monitoring</a>
+                <a class="btn btn-link" href="#data">Data-Driven Insights</a>
+                <a class="btn btn-link" href="#ui">Seamless User Experience</a>
             </div>
         </div>
     </div>
+</div>
+
     <!-- Footer End -->
 
 
@@ -508,7 +463,7 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+                    &copy; <a class="border-bottom" href="#">SagiTech</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                 </div>
