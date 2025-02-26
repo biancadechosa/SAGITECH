@@ -69,30 +69,33 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <div class="d-flex align-items-center px-4 px-lg-5">
-            <img src="static/img/sagitech_logo.png" alt="SagiTech Logo" style="height: 25px; margin-right: 8px; display: inline-block; vertical-align: middle;">
-            <a href="{% url 'index' %}" class="navbar-brand text-white" style="display: inline-block; vertical-align: middle;">
-                <h4 class="mb-0" style="line-height: 1;">SagiTech</h4>
-            </a>
-        </div>
-        
-        
+    <div class="container-fluid">
+        <!-- Logo & Brand -->
+        <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <img src="static/img/head-logo.png" alt="SagiTech Logo" style="height: 60px; width: auto; margin-right: 8px;">
+        </a>
+
+        <!-- Mobile Toggle Button -->
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{%url 'index' %}" class="nav-item nav-link active">Home</a>
+            <div class="navbar-nav ms-auto p-4 p-lg-0 d-flex align-items-center">
+                <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
                 <a href="#about" class="nav-item nav-link">About</a>
                 <a href="#services" class="nav-item nav-link">Services</a>
-                <div class="nav-item dropdown">
-
-                </div>
             </div>
-            <a href="{% url 'login' %}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get Started <i class="fa fa-arrow-right ms-3"></i></a>
+
+            <!-- Get Started Button -->
+            <a href="{% url 'login' %}" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Get Started 
+                <i class="fa fa-arrow-right ms-2"></i>
+            </a>
         </div>
-    </nav>
-    <!-- Navbar End -->
+    </div>
+</nav>
+
 
 
     <!-- Carousel Start -->
@@ -430,8 +433,7 @@ Say goodbye to uncertainty. Grow smarter, harvest better, and maximize your yiel
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-4 col-md-6">
-                <h4 class="text-white mb-4">SagiTech</h4>
-                <img src="static/img/sagitech_logo.png" alt="SagiTech Logo" class="img-fluid mb-3">
+                <img src="static/img/logo.png" alt="SagiTech Logo" class="img-fluid mb-3">
             </div>
             <div class="col-lg-4 col-md-6">
                 <h4 class="text-white mb-4">Contacts</h4>
