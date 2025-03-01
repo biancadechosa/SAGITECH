@@ -2,23 +2,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sign-up Form</title>
+    <title>Sign-up</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <style>
         *, *:before, *:after {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
         }
+
+        .carousel-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .carousel-inner, .carousel-item, .carousel-item img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            filter: brightness(1);
+        }
+
         body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Poppins', sans-serif;
-            background: url('{% static "img/login-bg.jpg" %}') no-repeat center center/cover;
             opacity: 0;
             animation: fadeIn 1.5s ease-in forwards;
         }
@@ -29,27 +48,21 @@
         }
 
         form {
-            width: 500px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
+            width: 600px;
+            background: rgba(0, 0, 0, 0.2); 
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
-            width: 50%;
-            max-width: 120px;
+            width: 100%;
+            max-width: 200px;
             height: auto;
-            margin-bottom: 25px;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -57,35 +70,20 @@
             transform: scale(1.2);
         }
 
-        h3 {
-            font-size: 36px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffffff;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(230, 230, 230, 1));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        h3:hover {
-            text-shadow: 0px 0px 20px rgba(34, 139, 34, 1),
-                        0px 0px 30px rgba(34, 139, 34, 0.8),
-                        0px 0px 40px rgba(34, 139, 34, 0.6),
-                        0px 0px 50px rgba(255, 255, 255, 0.6);
-            transform: scale(1.05);
+        .form-group {
+            flex: 1;
+            text-align: left;
         }
 
         label {
-            display: block;
-            margin-top: 15px;
             font-size: 16px;
             font-weight: 500;
-            text-align: left;
             color: #fff;
         }
 
@@ -107,8 +105,12 @@
             box-shadow: 0 0 12px rgba(107, 178, 82, 0.8);
         }
 
+        input:hover {
+            transform: scale(1.05);
+        }
+
         button {
-            margin-top: 25px;
+            margin-top: 20px;
             width: 100%;
             background-color: #6BB252;
             color: white;
@@ -118,15 +120,13 @@
             border-radius: 8px;
             cursor: pointer;
             border: none;
-            transition: background 0.3s, transform 0.2s ease-in-out;
+            transition: background 0.3s;
         }
 
         button:hover {
             background-color: #F95F09;
-            transform: scale(1.05);
         }
 
-        /* Sign-Up Link with Hover Effect */
         .switch {
             margin-top: 15px;
             font-size: 14px;
@@ -161,39 +161,9 @@
             width: 100%;
         }
 
-        .redirect a {
-            color: #6BB252;  /* Default green color */
-            text-decoration: none;
-            font-weight: 600;
-            position: relative;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .redirect a:hover {
-            color: #F95F09; /* Orange color on hover */
-        }
-
-        /* Underline Effect */
-        .redirect a::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: #F95F09;
-            transition: width 0.3s ease-in-out;
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-        }
-
-        .redirect a:hover::after {
-            width: 100%; /* Expands underline fully on hover */
-        }
-
-
         .back-btn {
             display: block;
-            margin: 20px auto 0;
+            margin: 15px auto 0;
             width: 100%;
             background: transparent;
             color: #fff;
@@ -214,31 +184,165 @@
             border-color: #F95F09;
             box-shadow: 0 0 10px rgba(249, 95, 9, 0.5);
         }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .message-error {
+            background-color: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.5);
+        }
+
+        .message-success {
+            background-color: rgba(107, 178, 82, 0.2);
+            color: #6BB252;
+            border: 1px solid rgba(107, 178, 82, 0.5);
+        }
+
+        .password-requirements {
+            margin-top: 5px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+                padding: 30px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 150px;
+            }
+
+            input {
+                height: 40px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <form>
+
+    <div id="background-carousel" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'img/login-bg.jpg' %}" alt="Background 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'img/samp1.jpg' %}" alt="Background 2">
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
         <div class="header">
             <img src="{% static 'img/logo.png' %}" alt="Sagitech Logo" class="logo">
         </div>
 
-        <label for="fullname">Full Name</label>
-        <input type="text" placeholder="Your Full Name" id="fullname">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags == 'error' %}message-error{% elif message.tags == 'success' %}message-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-        <label for="email">Email</label>
-        <input type="email" placeholder="Your Email" id="email">
+        <!-- Two-column layout -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" placeholder="Your Full Name" id="fullname" name="fullname" required>
+            </div>
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Create Password" id="password">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" placeholder="Your Email" id="email" name="email" required>
+            </div>
+        </div>
 
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" placeholder="Confirm Password" id="confirm-password">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Create Password" id="password" name="password" required>
+                <div class="password-requirements">
+                    Password must be at least 8 characters long
+                </div>
+            </div>
 
-        <button>Sign Up</button>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" required>
+            </div>
+        </div>
 
-        <p class="redirect">Already have an account? <a href="{% url 'login' %}">Log in here</a>.</p>
+        <button type="submit">Sign Up</button>
+
+        <p class="switch">Already have an account? <a href="{% url 'login' %}">Log in here</a>.</p>
 
         <a href="{% url 'index' %}" class="back-btn">Back to Home</a>
     </form>
+
+    <script>
+        // Client-side validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            
+            // Clear any existing messages
+            const existingMessages = document.querySelectorAll('.message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            let isValid = true;
+            let errorMessage = '';
+            
+            if (!fullname || !email || !password || !confirmPassword) {
+                errorMessage = 'All fields are required';
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                errorMessage = 'Passwords do not match';
+                isValid = false;
+            } else if (password.length < 8) {
+                errorMessage = 'Password must be at least 8 characters long';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                
+                // Create and display error message
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message message-error';
+                messageDiv.textContent = errorMessage;
+                
+                const headerElement = document.querySelector('.header');
+                headerElement.insertAdjacentElement('afterend', messageDiv);
+                
+                // Scroll to the top of the form
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
 </body>
 </html>

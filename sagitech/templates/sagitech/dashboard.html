@@ -1,170 +1,924 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SagiTech Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Sagitech - Banana Ripeness AI Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-green: #2E7D32;
+            --light-green: #4CAF50;
+            --dark-green: #1B5E20;
+            --accent-green: #8BC34A;
+            --text-light: #E8F5E9;
+            --text-dark: #1B5E20;
+            --gradient-green: linear-gradient(135deg, #2E7D32, #4CAF50);
+            --gradient-dark: linear-gradient(135deg, #1B5E20, #2E7D32);
+            --gradient-accent: linear-gradient(135deg, #8BC34A, #4CAF50);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
+            background-color: #f5f5f5;
+            color: var(--text-dark);
             display: flex;
-            background: #0f172a;
-            color: white;
-            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
         }
+
+        /* Sidebar Styles */
         .sidebar {
-            width: 250px;
-            height: 100vh;
-            background: linear-gradient(180deg, #1e293b, #0f172a);
-            color: white;
-            padding-top: 20px;
+            width: 280px;
+            background: var(--gradient-dark);
+            color: var(--text-light);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
             position: fixed;
-            transition: 0.3s;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+            z-index: 100;
         }
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            color: white;
-            display: block;
-            font-size: 16px;
-            transition: 0.3s;
+
+        .sidebar.collapsed {
+            width: 80px;
         }
-        .sidebar a:hover {
-            background: #334155;
-            border-left: 4px solid #4f46e5;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 20px;
+
+
+        .logo {
             width: 100%;
-            transition: 0.3s;
-        }
-        .navbar {
-            background: #1e293b;
-            color: white;
-            padding: 10px;
-            border-bottom: 2px solid #4f46e5;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .card {
-            background: #1e293b;
-            border: none;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 180px;
+            height: auto;
             transition: transform 0.3s ease-in-out;
         }
-        .card:hover {
-            transform: scale(1.05);
+
+        .logo i {
+            font-size: 20px;
+            color: white;
         }
-        canvas {
-            background: #0f172a;
+
+        
+
+        .sidebar.collapsed .logo-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            background: var(--light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            border: 3px solid white;
+            transition: var(--transition);
+        }
+
+        .toggle-btn:hover {
+            background: var(--accent-green);
+            transform: scale(1.1);
+        }
+
+        .toggle-btn i {
+            color: white;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .sidebar.collapsed .toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-bottom: auto;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
             border-radius: 8px;
+            transition: var(--transition);
         }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            min-width: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-text {
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .user-avatar i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .user-info {
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .user-role {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .sidebar.collapsed .user-info {
+            opacity: 0;
+            width: 0;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 280px;
+            transition: var(--transition);
+        }
+
+        .main-content.expanded {
+            margin-left: 80px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            border: none;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--light-green);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-green);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--gradient-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark-green);
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .card-progress {
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-green);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            background: var(--gradient-green);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chart-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%);
+            background-size: 20px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .recent-scans {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .scans-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .scans-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .view-all {
+            color: var(--light-green);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .view-all:hover {
+            color: var(--dark-green);
+        }
+
+        .scan-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .scan-item:last-child {
+            border-bottom: none;
+        }
+
+        .scan-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .scan-icon i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .scan-details {
+            flex: 1;
+        }
+
+        .scan-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-green);
+        }
+
+        .scan-meta {
+            display: flex;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .scan-date {
+            margin-right: 15px;
+        }
+
+        .scan-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background-color: #E8F5E9;
+            color: var(--dark-green);
+        }
+
+        .status-processing {
+            background-color: #FFF8E1;
+            color: #FFA000;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-green);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--light-green);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .form-input:hover {
+            border-color: var(--light-green);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--gradient-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--gradient-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+        .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar.logo {
+                max-width: 150px;
+            }
+            .sidebar .nav-text,
+            .sidebar .user-info {
+                opacity: 0;
+                width: 0;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .toggle-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-container {
+                width: 100%;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 0;
+                padding: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h4 class="text-center">SagiTech</h4>
-        <a href="#">Dashboard</a>
-        <a href="#">AI Insights</a>
-        <a href="#">Drone Data</a>
-        <a href="#">Analytics</a>
-        <a href="#">Settings</a>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="header">
+            <img src="{% static 'img/logo.png' %}" alt="Sagitech Logo" class="logo">
+        </div>
+        
+        <div class="toggle-btn" id="toggle-btn">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item active">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-drone-alt"></i></div>
+                    <span class="nav-text">Drone Fleet</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <span class="nav-text">Field Maps</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+                    <span class="nav-text">Analytics</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <span class="nav-text">Schedule</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-cog"></i></div>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+                <div class="user-name">Arjay Delos Reyes</div>
+                <div class="user-role">Farm Manager</div>
+            </div>
+        </div>
     </div>
-    <div class="content">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <span class="navbar-brand">Dashboard</span>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="header">
+            <h1 class="page-title">Banana Ripeness Dashboard</h1>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search fields, drones, or reports...">
             </div>
-        </nav>
-        <div class="container mt-4">
-            <h2>Welcome to SagiTech Dashboard</h2>
-            <p>Monitor AI insights, drone data, and analytics for banana yield prediction.</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5>Historical Yield Data</h5>
-                        <canvas id="yieldChart"></canvas>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Yield Prediction</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5>Growth Rate Analysis</h5>
-                        <canvas id="growthChart"></canvas>
+                <div class="card-value">24.8 tons</div>
+                <div class="card-subtitle">+12% from last month</div>
+                <div class="card-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Progress</span>
+                        <span>78%</span>
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5>Weather Impact</h5>
-                        <canvas id="weatherChart"></canvas>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Ripeness Index</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-seedling"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5>Market Trends</h5>
-                        <canvas id="marketChart"></canvas>
+                <div class="card-value">68%</div>
+                <div class="card-subtitle">Average across all fields</div>
+                <div class="card-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 68%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Unripe</span>
+                        <span>Fully Ripe</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Active Drones</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-drone"></i>
+                    </div>
+                </div>
+                <div class="card-value">8/10</div>
+                <div class="card-subtitle">2 drones in maintenance</div>
+                <div class="card-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Fleet Status</span>
+                        <span>80%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">Harvest Readiness</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
+                </div>
+                <div class="card-value">5 days</div>
+                <div class="card-subtitle">Until optimal harvest time</div>
+                <div class="card-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Readiness</span>
+                        <span>65%</span>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Ripeness Progression Over Time</h3>
+                <div class="chart-actions">
+                    <button class="chart-btn">Weekly</button>
+                    <button class="chart-btn">Monthly</button>
+                    <button class="chart-btn">Export</button>
+                </div>
+            </div>
+            <div class="chart-placeholder">
+                Ripeness Trend Chart (Interactive visualization would be here)
+            </div>
+        </div>
+        
+        <div class="recent-scans">
+            <div class="scans-header">
+                <h3 class="scans-title">Recent Drone Scans</h3>
+                <a href="#" class="view-all">View All Scans</a>
+            </div>
+            
+            <div class="scan-item">
+                <div class="scan-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="scan-details">
+                    <div class="scan-title">North Field Scan</div>
+                    <div class="scan-meta">
+                        <div class="scan-date">Today, 10:30 AM</div>
+                        <div class="scan-area">12.5 acres</div>
+                    </div>
+                </div>
+                <div class="scan-status status-completed">Completed</div>
+            </div>
+            
+            <div class="scan-item">
+                <div class="scan-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="scan-details">
+                    <div class="scan-title">East Field Scan</div>
+                    <div class="scan-meta">
+                        <div class="scan-date">Today, 09:15 AM</div>
+                        <div class="scan-area">8.3 acres</div>
+                    </div>
+                </div>
+                <div class="scan-status status-completed">Completed</div>
+            </div>
+            
+            <div class="scan-item">
+                <div class="scan-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="scan-details">
+                    <div class="scan-title">South Field Scan</div>
+                    <div class="scan-meta">
+                        <div class="scan-date">Today, 11:45 AM</div>
+                        <div class="scan-area">15.7 acres</div>
+                    </div>
+                </div>
+                <div class="scan-status status-processing">Processing</div>
+            </div>
+            
+            <div class="scan-item">
+                <div class="scan-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="scan-details">
+                    <div class="scan-title">West Field Scan</div>
+                    <div class="scan-meta">
+                        <div class="scan-date">Yesterday, 04:20 PM</div>
+                        <div class="scan-area">10.2 acres</div>
+                    </div>
+                </div>
+                <div class="scan-status status-completed">Completed</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3 class="chart-title">Schedule New Drone Scan</h3>
+            </div>
+            
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Field Selection</label>
+                    <select class="form-input">
+                        <option>North Field</option>
+                        <option>East Field</option>
+                        <option>South Field</option>
+                        <option>West Field</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Scan Date</label>
+                    <input type="date" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Scan Time</label>
+                    <input type="time" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Drone Selection</label>
+                    <select class="form-input">
+                        <option>Drone 1 - DJI Phantom 4 RTK</option>
+                        <option>Drone 2 - DJI Matrice 300 RTK</option>
+                        <option>Drone 3 - DJI Mavic 3 Enterprise</option>
+                        <option>Auto-select available drone</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Scan Parameters</label>
+                    <select class="form-input">
+                        <option>Standard Ripeness Scan</option>
+                        <option>Detailed Yield Prediction</option>
+                        <option>Disease Detection</option>
+                        <option>Full Analysis</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Schedule Scan</button>
+            </form>
+        </div>
     </div>
+    
     <script>
-        const ctx1 = document.getElementById('yieldChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                datasets: [{
-                    label: 'Yield Over Time',
-                    data: [30, 50, 40, 60, 80],
-                    borderColor: '#4f46e5',
-                    fill: false
-                }]
-            }
+        // Toggle sidebar
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const toggleBtn = document.getElementById('toggle-btn');
+        
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
         });
         
-        const ctx2 = document.getElementById('growthChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: ['Stage 1', 'Stage 2', 'Stage 3', 'Stage 4'],
-                datasets: [{
-                    label: 'Growth Rate',
-                    data: [10, 20, 30, 40],
-                    backgroundColor: '#14b8a6'
-                }]
-            }
-        });
-        
-        const ctx3 = document.getElementById('weatherChart').getContext('2d');
-        new Chart(ctx3, {
-            type: 'pie',
-            data: {
-                labels: ['Sunny', 'Rainy', 'Cloudy'],
-                datasets: [{
-                    label: 'Weather Impact',
-                    data: [50, 30, 20],
-                    backgroundColor: ['#facc15', '#3b82f6', '#64748b']
-                }]
-            }
-        });
-        
-        const ctx4 = document.getElementById('marketChart').getContext('2d');
-        new Chart(ctx4, {
-            type: 'doughnut',
-            data: {
-                labels: ['High Demand', 'Moderate Demand', 'Low Demand'],
-                datasets: [{
-                    label: 'Market Trends',
-                    data: [60, 25, 15],
-                    backgroundColor: ['#ef4444', '#f97316', '#10b981']
-                }]
-            }
+        // Animate progress bars on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
         });
     </script>
 </body>

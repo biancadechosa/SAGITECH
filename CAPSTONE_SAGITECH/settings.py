@@ -68,6 +68,12 @@ TEMPLATES = [
     },
 ]
 
+# Add this to your settings.py
+AUTHENTICATION_BACKENDS = [
+    'sagitech.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default backend as fallback
+]
+
 WSGI_APPLICATION = 'CAPSTONE_SAGITECH.wsgi.application'
 
 
@@ -80,6 +86,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+LOGIN_URL = 'login'
 
 
 

@@ -2,104 +2,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login Form</title>
+    <title>Login</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         *, *:before, *:after {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
         }
+
+        .carousel-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            filter: brightness(1);
+        }
+
         body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Poppins', sans-serif;
-            background: url('{% static "img/login-bg.jpg" %}') no-repeat center center/cover;
             opacity: 0;
             animation: fadeIn 1.5s ease-in forwards;
+            padding: 10px;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
         form {
-            width: 500px;
-            background: rgba(0, 0, 0, 0.3); /* Darker shade but still transparent */
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
+            width: 450px;
+            max-width: 90%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow for depth */
-        }
-       
-
-        /* Logo and Header */
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
-            width: 50%; /* Increased size relative to the form */
-            max-width: 120px; /* Ensures it doesn't get too large */
-            height: auto; /* Maintains aspect ratio */
-            margin-bottom: 25px; /* Better spacing from heading */
-            transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                width: 55%;
-                max-width: 110px; /* Slightly smaller on smaller screens */
-            }
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
         }
 
         .logo:hover {
-            transform: scale(1.2); /* Adds a subtle hover animation */
+            transform: scale(1.1);
         }
 
-
-
-
-        h3 {
-            font-size: 36px; /* Slightly larger for better visibility */
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffffff; /* Clean white text */
-            
-
-            /* Optional gradient effect for a soft modern touch */
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(230, 230, 230, 1));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Optional hover effect for interactivity */
-        h3:hover {
-            text-shadow: 0px 0px 20px rgba(34, 139, 34, 1),   /* Strong green glow */
-                        0px 0px 30px rgba(34, 139, 34, 0.8), /* Medium green glow */
-                        0px 0px 40px rgba(34, 139, 34, 0.6), /* Soft green glow */
-                        0px 0px 50px rgba(255, 255, 255, 0.6); /* Subtle white glow */
-            transform: scale(1.05);
-        }
-
-
-
-        /* Labels */
         label {
             display: block;
             margin-top: 15px;
@@ -109,7 +80,6 @@
             color: #fff;
         }
 
-        /* Input Fields with Glow Effect */
         input {
             width: 100%;
             height: 45px;
@@ -128,7 +98,24 @@
             box-shadow: 0 0 12px rgba(107, 178, 82, 0.8);
         }
 
-        /* Login Button */
+        input:hover {
+            transform: scale(1.05);
+        }
+
+        .input-toggle {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-toggle .toggle-password {
+            position: absolute;
+            right: 5px;
+            top: 70%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: green;
+        }
+
         button {
             margin-top: 25px;
             width: 100%;
@@ -148,7 +135,6 @@
             transform: scale(1.05);
         }
 
-        /* Sign-Up Link with Hover Effect */
         .switch {
             margin-top: 15px;
             font-size: 14px;
@@ -183,7 +169,6 @@
             width: 100%;
         }
 
-        /* Back to Home Button */
         .back-btn {
             display: block;
             margin: 20px auto 0;
@@ -207,27 +192,96 @@
             border-color: #F95F09;
             box-shadow: 0 0 10px rgba(249, 95, 9, 0.5);
         }
+
+        .error-message {
+            color: #ff6b6b;
+            background-color: rgba(255, 107, 107, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 30px;
+            }
+            
+            .logo {
+                max-width: 150px;
+            }
+
+            input {
+                height: 40px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <form>
-        <!-- Logo and Header -->
+
+    <div id="background-carousel" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'img/login-bg.jpg' %}" class="d-block w-100" alt="Login Background">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'img/samp1.jpg' %}" class="d-block w-100" alt="Alternative Background">
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
         <div class="header">
             <img src="{% static 'img/logo.png' %}" alt="Sagitech Logo" class="logo">
         </div>
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <label for="email">Email</label>
-        <input type="email" placeholder="Your Email" id="email">
-        
-        <label for="password">Password</label>
-        <input type="password" placeholder="Enter Password" id="password">
-        
-        <button>Log In</button>
+        <input type="email" placeholder="Your Email" id="email" name="email" required>
+
+        <div class="input-toggle">
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" id="password" name="password" required>
+            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+        </div>
+
+        <button type="submit">Log In</button>
+       
+        <script>
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                let passwordField = document.getElementById('password');
+                let icon = this;
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                } else {
+                    passwordField.type = "password";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+            });
+        </script>
 
         <p class="switch">Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
 
-        <!-- Back to Home Button -->
         <a href="{% url 'index' %}" class="back-btn">Back to Home</a>
     </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
