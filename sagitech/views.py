@@ -4,25 +4,52 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from sagitech.models import UserProfile
+from django.contrib.auth import logout
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def LandingPage(request):
     return render(request, 'sagitech/index.html')
 
+@ensure_csrf_cookie
 def LoginPage(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
         
-        # Django's default user model uses username, not email
-        # If you're using email as the login field, you'll need to adjust this
+        # Check if it's an AJAX request
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        
+        if not email or not password:
+            if is_ajax:
+                return JsonResponse({'success': False, 'message': 'Email and password are required'}, status=400)
+            else:
+                # Handle non-AJAX request (fallback)
+                messages.error(request, 'Email and password are required')
+                return render(request, 'sagitech/login.html')
+        
+        # Authenticate user (adjust according to your authentication method)
         user = authenticate(request, username=email, password=password)
         
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            if is_ajax:
+                return JsonResponse({
+                    'success': True, 
+                    'message': 'Login successful',
+                    'redirect_url': '/dashboard/'  # Change to your redirect URL
+                })
+            else:
+                return redirect('dashboard')  # Fallback for non-AJAX
         else:
-            messages.error(request, 'Invalid email or password')
+            if is_ajax:
+                return JsonResponse({'success': False, 'message': 'Invalid email or password'}, status=401)
+            else:
+                messages.error(request, 'Invalid email or password')
+                return render(request, 'sagitech/dashboard.html')
     
+    # GET request - just render the login page
     return render(request, 'sagitech/login.html')
 
 def SignupPage(request):
@@ -75,3 +102,7 @@ def SignupPage(request):
 @login_required
 def DashboardPage(request):
     return render(request, 'sagitech/dashboard.html')
+
+def LogoutView(request):
+    logout(request)
+    return redirect('login')
