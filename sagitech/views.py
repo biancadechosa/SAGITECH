@@ -25,6 +25,14 @@ def LoginPage(request):
             else:
                 messages.error(request, 'Email and password are required')
                 return render(request, 'sagitech/login.html')
+            
+         # Check if account exists
+        if not User.objects.filter(email=email).exists():
+            if is_ajax:
+                return JsonResponse({'success': False, 'message': 'Account does not exist. Please log in first'}, status=404)
+            else:
+                messages.error(request, 'Account does not exist. Please log in first')
+                return render(request, 'sagitech/login.html')
         
         # Authenticate user with email
         user = authenticate(request, email=email, password=password)

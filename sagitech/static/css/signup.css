@@ -270,4 +270,40 @@ input:hover {
     .back-btn {
         margin-top: 1rem;
     }
+
+    .form-group {
+        position: relative;
+    }
+    
+    .form-group {
+        position: relative;
+    }
+    
+    .input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .input-container input {
+        width: 100%;
+        padding-right: 2.5rem;
+        height: 2.5rem; /* Adjust height to align icon inside the textbox */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0.5rem 2.5rem 0.5rem 0.5rem; /* Ensures space for the icon inside the input */
+    }
+    
+    .input-container .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    
 }
