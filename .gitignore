@@ -1,19 +1,2 @@
 # Ignore Python virtual environment
 venv/
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# IDE or Editor files
-.vscode/
-.idea/
-
-# Environment variables
-.venv
-
-# Logs and caches
-*.log
-*.sqlite3
