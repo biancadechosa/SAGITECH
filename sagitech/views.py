@@ -111,3 +111,8 @@ def LogoutView(request):
     logout(request)
     return redirect('login')
 
+def BananaScan(request):
+    return render(request, 'sagitech/scan.html')
+
+
+
